@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html><head><title>speeding tickets</title>
+<html><head><title>25 Over</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -13,7 +13,7 @@
 <nav class="navbar navbar-inverse">
 
     <div class="navbar-header">
-        <a class="navbar-brand" href="#">Our Website</a>
+        <a class="navbar-brand" href="#">Program 6</a>
     </div>
     <div>
        <ul class="nav navbar-nav">
@@ -27,6 +27,7 @@
 <div id="ticketApp">
 
      <h2>Tickets July 4, 2014, Minneapolis/St. Paul</h2>
+     <h3>25mph or over</h3>
 
           <table class="table table-bordered table-striped">
               <tr>
@@ -36,7 +37,7 @@
                   <th>MPH Over</th>
                   <th>Violator Sex</th>
               </tr>
-              <tr v-for = "ticket in tickets">
+              <tr v-for = "ticket in filterTickets">
                   <td>{{ticket.tid}}</td>
                   <td>{{ticket.stop_time}}</td>
                   <td>{{ticket.posted_speed}}</td>
@@ -52,7 +53,8 @@
        let app = Vue.createApp({
             data() {     // returns an object of data
                 return {
-                    tickets: [],           // array to hold student data
+                    tickets: [],
+                    filterTickets: [],          // array to hold student data
                 }
             },
             created() {      // section executes as page loads
@@ -63,6 +65,9 @@
                     const response = await fetch('tickets1.json')
                     this.tickets = await response.json()
                     //tickets = data.filter( (item) => item.major == majSelect );
+                    getOver(){
+                        this.filterTickets = this.tickets1.filter((ticket) => (ticket.actual_speed - ticket.posted_speed) >= 25)
+                        }
                 },
             }
           })
